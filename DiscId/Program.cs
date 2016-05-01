@@ -5,9 +5,11 @@ namespace MetaBrainz.MusicBrainz.DiscId {
 
   internal static class Program {
 
+    private static readonly TimeSpan TwoSeconds = new TimeSpan(0, 0, 2);
+
     private static void Main(string[] args) {
       try {
-      var device = ((args.Length == 0) ? new CdDevice() : new CdDevice(args[0]));
+      var device = (args.Length == 0) ? new CdDevice() : new CdDevice(args[0]);
         Console.WriteLine($"Disc Device: {device.Name}");
         Console.WriteLine();
         device.ReadDisc();
@@ -21,8 +23,13 @@ namespace MetaBrainz.MusicBrainz.DiscId {
           Console.WriteLine($"Submission URL      : {toc.SubmissionUrl}");
           Console.WriteLine();
           Console.WriteLine("Tracks:");
+          {
+            var t = toc.Tracks[toc.FirstTrack];
+            if (t.StartTime > Program.TwoSeconds)
+              Console.WriteLine($" --- Duration: {t.StartTime.Subtract(Program.TwoSeconds)}");
+          }
           foreach (var t in toc.Tracks)
-            Console.WriteLine($" {t.Number,2}. Duration: {t.Duration} ISRC: {t.Isrc}");
+            Console.WriteLine($" {t.Number,2}. Duration: {t.Duration,-16} ISRC: {t.Isrc}");
         }
       }
       catch (Exception e) {
