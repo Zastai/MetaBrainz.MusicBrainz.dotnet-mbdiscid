@@ -9,14 +9,27 @@ namespace MetaBrainz.MusicBrainz.DiscId {
 
     private static void Main(string[] args) {
       try {
-      var device = (args.Length == 0) ? new CdDevice() : new CdDevice(args[0]);
-        Console.WriteLine($"Disc Device: {device.Name}");
+        Console.WriteLine($"Supported Features: {string.Join(", ", CdDevice.Features)}");
         Console.WriteLine();
-        device.ReadDisc();
-        var toc = device.TableOfContents;
+        Console.WriteLine("Available Devices:");
+        for (byte n = 0; n < 100; ++n) {
+          var device = CdDevice.GetName(n);
+          if (device == null)
+            break;
+          Console.WriteLine($"{n + 1,3}. {device}");
+        }
+        Console.WriteLine();
+        var cd = new CdDevice();
+        if (args.Length == 0)
+          cd.ReadDisc();
+        else
+          cd.ReadDisc(args[0]);
+        var toc = cd.TableOfContents;
         if (toc == null)
           Console.WriteLine("No table of contents available.");
         else {
+          Console.WriteLine($"CD Device Used      : {cd.DeviceName}");
+          Console.WriteLine();
           Console.WriteLine($"Media Catalog Number: {toc.MediaCatalogNumber}");
           Console.WriteLine($"MusicBrainz Disc ID : {toc.DiscId}");
           Console.WriteLine($"FreeDB Disc ID      : {toc.FreeDbId}");
