@@ -9,40 +9,40 @@ namespace MetaBrainz.MusicBrainz.DiscId {
 
     private static void Main(string[] args) {
       try {
-        Console.WriteLine($"Supported Features: {string.Join(", ", CdDevice.Features)}");
-        Console.WriteLine();
-        Console.WriteLine("Available Devices:");
-        for (byte n = 0; n < 100; ++n) {
-          var device = CdDevice.GetName(n);
-          if (device == null)
-            break;
-          Console.WriteLine($"{n + 1,3}. {device}");
-        }
-        Console.WriteLine();
-        var cd = new CdDevice();
-        if (args.Length == 0)
-          cd.ReadDisc();
-        else
-          cd.ReadDisc(args[0]);
-        var toc = cd.TableOfContents;
-        if (toc == null)
-          Console.WriteLine("No table of contents available.");
-        else {
-          Console.WriteLine($"CD Device Used      : {cd.DeviceName}");
+        if (args.Length == 1 && (args[0] == "help" || args[0] == "-?" || args[0] == "/?")) {
+          Console.WriteLine($"Supported Features: {string.Join(", ", CdDevice.Features)}");
           Console.WriteLine();
-          Console.WriteLine($"Media Catalog Number: {toc.MediaCatalogNumber}");
-          Console.WriteLine($"MusicBrainz Disc ID : {toc.DiscId}");
-          Console.WriteLine($"FreeDB Disc ID      : {toc.FreeDbId}");
-          Console.WriteLine($"Submission URL      : {toc.SubmissionUrl}");
-          Console.WriteLine();
-          Console.WriteLine("Tracks:");
-          {
-            var t = toc.Tracks[toc.FirstTrack];
-            if (t.StartTime > Program.TwoSeconds)
-              Console.WriteLine($" --- Duration: {t.StartTime.Subtract(Program.TwoSeconds)}");
+          Console.WriteLine("Available Devices:");
+          for (byte n = 0; n < 100; ++n) {
+            var device = CdDevice.GetName(n);
+            if (device == null)
+              break;
+            Console.WriteLine($"{n + 1,3}. {device}");
           }
-          foreach (var t in toc.Tracks)
-            Console.WriteLine($" {t.Number,2}. Duration: {t.Duration,-16} ISRC: {t.Isrc}");
+        }
+        else {
+          var cd = new CdDevice();
+          cd.ReadDisc((args.Length == 0) ? null : args[0]);
+          var toc = cd.TableOfContents;
+          if (toc == null)
+            Console.WriteLine("No table of contents available.");
+          else {
+            Console.WriteLine($"CD Device Used      : {cd.DeviceName}");
+            Console.WriteLine();
+            Console.WriteLine($"Media Catalog Number: {toc.MediaCatalogNumber}");
+            Console.WriteLine($"MusicBrainz Disc ID : {toc.DiscId}");
+            Console.WriteLine($"FreeDB Disc ID      : {toc.FreeDbId}");
+            Console.WriteLine($"Submission URL      : {toc.SubmissionUrl}");
+            Console.WriteLine();
+            Console.WriteLine("Tracks:");
+            {
+              var t = toc.Tracks[toc.FirstTrack];
+              if (t.StartTime > Program.TwoSeconds)
+                Console.WriteLine($" --- Duration: {t.StartTime.Subtract(Program.TwoSeconds)}");
+            }
+            foreach (var t in toc.Tracks)
+              Console.WriteLine($" {t.Number,2}. Duration: {t.Duration,-16} ISRC: {t.Isrc}");
+          }
         }
       }
       catch (Exception e) {
