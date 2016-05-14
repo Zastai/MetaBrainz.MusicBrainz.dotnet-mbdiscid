@@ -35,13 +35,13 @@ namespace MetaBrainz.MusicBrainz.DiscId {
             Console.WriteLine($"Submission URL      : {toc.SubmissionUrl}");
             Console.WriteLine();
             Console.WriteLine("Tracks:");
-            {
+            { // Check for a "hidden" pre-gap track
               var t = toc.Tracks[toc.FirstTrack];
               if (t.StartTime > Program.TwoSeconds)
-                Console.WriteLine($" --- Duration: {t.StartTime.Subtract(Program.TwoSeconds)}");
+                Console.WriteLine($" --- Offset: {150,6} ({Program.TwoSeconds,-16}) Length: {t.Offset - 150,6} ({t.StartTime.Subtract(Program.TwoSeconds),-16})");
             }
             foreach (var t in toc.Tracks)
-              Console.WriteLine($" {t.Number,2}. Duration: {t.Duration,-16} ISRC: {t.Isrc}");
+              Console.WriteLine($" {t.Number,2}. Offset: {t.Offset,6} ({t.StartTime,-16}) Length: {t.Length,6} ({t.Duration,-16}) ISRC: {t.Isrc}");
           }
         }
       }
