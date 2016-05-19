@@ -10,23 +10,21 @@ namespace MetaBrainz.MusicBrainz.DiscId {
     private static void Main(string[] args) {
       try {
         if (args.Length == 1 && (args[0] == "help" || args[0] == "-?" || args[0] == "/?")) {
-          Console.WriteLine($"Supported Features: {string.Join(", ", CdDevice.Features)}");
+          Console.WriteLine($"Supported Features: {string.Join(", ", TableOfContents.ReadFeatures)}");
           Console.WriteLine();
-          Console.WriteLine($"Default Device: {CdDevice.DefaultName ?? "<none available>"}");
+          Console.WriteLine($"Default Device: {TableOfContents.DefaultDevice ?? "<none available>"}");
           Console.WriteLine();
           Console.WriteLine("Available Devices:");
           var n = 0;
-          foreach (var device in CdDevice.AvailableNames)
+          foreach (var device in TableOfContents.AvailableDevices)
             Console.WriteLine($"{++n,3}. {device}");
         }
         else {
-          var cd = new CdDevice();
-          cd.ReadDisc((args.Length == 0) ? null : args[0]);
-          var toc = cd.TableOfContents;
+          var toc = TableOfContents.ReadDisc((args.Length == 0) ? null : args[0]);
           if (toc == null)
             Console.WriteLine("No table of contents available.");
           else {
-            Console.WriteLine($"CD Device Used      : {cd.DeviceName}");
+            Console.WriteLine($"CD Device Used      : {toc.DeviceName}");
             Console.WriteLine();
             Console.WriteLine($"Media Catalog Number: {toc.MediaCatalogNumber}");
             Console.WriteLine($"MusicBrainz Disc ID : {toc.DiscId}");
