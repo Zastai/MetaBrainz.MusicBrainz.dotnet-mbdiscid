@@ -12,13 +12,12 @@ namespace MetaBrainz.MusicBrainz.DiscId {
         if (args.Length == 1 && (args[0] == "help" || args[0] == "-?" || args[0] == "/?")) {
           Console.WriteLine($"Supported Features: {string.Join(", ", CdDevice.Features)}");
           Console.WriteLine();
+          Console.WriteLine($"Default Device: {CdDevice.DefaultName ?? "<none available>"}");
+          Console.WriteLine();
           Console.WriteLine("Available Devices:");
-          for (byte n = 0; n < 100; ++n) {
-            var device = CdDevice.GetName(n);
-            if (device == null)
-              break;
-            Console.WriteLine($"{n + 1,3}. {device}");
-          }
+          var n = 0;
+          foreach (var device in CdDevice.AvailableNames)
+            Console.WriteLine($"{++n,3}. {device}");
         }
         else {
           var cd = new CdDevice();
