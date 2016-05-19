@@ -10,7 +10,7 @@ namespace MetaBrainz.MusicBrainz.DiscId {
     private static void Main(string[] args) {
       try {
         if (args.Length == 1 && (args[0] == "help" || args[0] == "-?" || args[0] == "/?")) {
-          Console.WriteLine($"Supported Features: {string.Join(", ", TableOfContents.ReadFeatures)}");
+          Console.WriteLine($"Supported Read Features: {string.Join(", ", TableOfContents.ReadFeatures)}");
           Console.WriteLine();
           Console.WriteLine($"Default Device: {TableOfContents.DefaultDevice ?? "<none available>"}");
           Console.WriteLine();
