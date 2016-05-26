@@ -7,7 +7,31 @@ namespace MetaBrainz.MusicBrainz.DiscId {
 
     private static readonly TimeSpan TwoSeconds = new TimeSpan(0, 0, 2);
 
-    private static void Main(string[] args) {
+    private static void ReportExceptionOnConsole(Exception e, string prefix = "") {
+      if (e == null)
+        return;
+      var curcolor = Console.ForegroundColor;
+      try {
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine($"{prefix}[{e.GetType()}] {e.Message}");
+#if DEBUG
+        {
+          var st = e.StackTrace;
+          if (!string.IsNullOrEmpty(st)) {
+            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.WriteLine(st);
+          }
+        }
+#endif
+        prefix = "Caused by: ";
+        Program.ReportExceptionOnConsole(e.InnerException, prefix);
+      }
+      finally {
+        Console.ForegroundColor = curcolor;
+      }
+    }
+
+    private static int Main(string[] args) {
       try {
         if (args.Length == 1 && (args[0] == "help" || args[0] == "-?" || args[0] == "/?")) {
           Console.WriteLine($"Supported Read Features: {string.Join(", ", TableOfContents.ReadFeatures)}");
@@ -41,12 +65,16 @@ namespace MetaBrainz.MusicBrainz.DiscId {
               Console.WriteLine($" {t.Number,2}. Offset: {t.Offset,6} ({t.StartTime,-16}) Length: {t.Length,6} ({t.Duration,-16}) ISRC: {t.Isrc}");
           }
         }
+        return 0;
       }
       catch (Exception e) {
-        Console.WriteLine($"[error] {e}");
+        Program.ReportExceptionOnConsole(e);
+        return 1;
       }
-      if (Debugger.IsAttached)
-        Console.ReadKey();
+      finally {
+        if (Debugger.IsAttached)
+          Console.ReadKey();
+      }
     }
 
   }
