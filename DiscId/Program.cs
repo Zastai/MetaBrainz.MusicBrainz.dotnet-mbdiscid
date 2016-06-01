@@ -12,8 +12,10 @@ namespace MetaBrainz.MusicBrainz.DiscId {
         return;
       var curcolor = Console.ForegroundColor;
       try {
-        Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine($"{prefix}[{e.GetType()}] {e.Message}");
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.Write(prefix);
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine($"[{e.GetType()}] {e.Message}");
 #if DEBUG
         {
           var st = e.StackTrace;
