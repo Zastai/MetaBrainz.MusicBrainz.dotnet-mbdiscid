@@ -35,48 +35,102 @@ namespace MetaBrainz.MusicBrainz.DiscId {
 
     private static int Main(string[] args) {
       try {
-        if (args.Length == 1 && (args[0] == "help" || args[0] == "-?" || args[0] == "/?")) {
-          Console.WriteLine($"Supported Read Features: {string.Join(", ", TableOfContents.ReadFeatures)}");
-          Console.WriteLine();
-          Console.WriteLine($"Default Device: {TableOfContents.DefaultDevice ?? "<none available>"}");
-          Console.WriteLine();
-          Console.WriteLine("Available Devices:");
-          var n = 0;
-          foreach (var device in TableOfContents.AvailableDevices)
-            Console.WriteLine($"{++n,3}. {device}");
-        }
-        else {
-          var toc = TableOfContents.ReadDisc((args.Length == 0) ? null : args[0]);
-          if (toc == null)
-            Console.WriteLine("No table of contents available.");
-          else {
-            Console.WriteLine($"CD Device Used      : {toc.DeviceName}");
-            Console.WriteLine();
-            Console.WriteLine($"Media Catalog Number: {toc.MediaCatalogNumber}");
-            Console.WriteLine($"MusicBrainz Disc ID : {toc.DiscId}");
-            Console.WriteLine($"FreeDB Disc ID      : {toc.FreeDbId}");
-            Console.WriteLine($"Submission URL      : {toc.SubmissionUrl}");
-            Console.WriteLine();
-            Console.WriteLine("Tracks:");
-            { // Check for a "hidden" pre-gap track
-              var t = toc.Tracks[toc.FirstTrack];
-              if (t.StartTime > Program.TwoSeconds)
-                Console.WriteLine($" --- Offset: {150,6} ({Program.TwoSeconds,-16}) Length: {t.Offset - 150,6} ({t.StartTime.Subtract(Program.TwoSeconds),-16})");
-            }
-            foreach (var t in toc.Tracks)
-              Console.WriteLine($" {t.Number,2}. Offset: {t.Offset,6} ({t.StartTime,-16}) Length: {t.Length,6} ({t.Duration,-16}) ISRC: {t.Isrc}");
+        var showText = true;
+        string device = null;
+        foreach (var arg in args) {
+          switch (arg) {
+            case "help": case "-?": case "/?":
+              Console.WriteLine($"Supported Read Features: {string.Join(", ", TableOfContents.ReadFeatures)}");
+              Console.WriteLine();
+              Console.WriteLine($"Default Device: {TableOfContents.DefaultDevice ?? "<none available>"}");
+              Console.WriteLine();
+              Console.WriteLine("Available Devices:");
+              var n = 0;
+              foreach (var dev in TableOfContents.AvailableDevices)
+                Console.WriteLine($"{++n,3}. {dev}");
+              return 0;
+            case "-notext":
+            case "/notext":
+              showText = false;
+              break;
+            default:
+              if (device != null)
+                throw new ArgumentException("Too many command line arguments given.");
+              device = arg;
+              break;
           }
         }
-        return 0;
+        var toc = TableOfContents.ReadDisc(device);
+        if (toc == null)
+          Console.WriteLine("No table of contents available.");
+        else {
+          Console.WriteLine($"CD Device Used      : {toc.DeviceName}");
+          Console.WriteLine();
+          Console.WriteLine($"Media Catalog Number: {toc.MediaCatalogNumber}");
+          Console.WriteLine($"MusicBrainz Disc ID : {toc.DiscId}");
+          Console.WriteLine($"FreeDB Disc ID      : {toc.FreeDbId}");
+          Console.WriteLine($"Submission URL      : {toc.SubmissionUrl}");
+          Console.WriteLine();
+          var languages = toc.TextLanguages;
+          if (showText && languages?.Count > 0) {
+            var text = toc.TextInfo;
+            if (text?.Count > 0) {
+              Console.WriteLine("CD-TEXT Information:");
+              var idx = 0;
+              foreach (var l in languages) {
+                Console.WriteLine($"- Language: {l}");
+                var ti = text[idx++];
+                if (ti.Genre.HasValue) {
+                  if (ti.GenreDescription != null)
+                    Console.WriteLine($"  - Genre           : {ti.Genre.Value} ({ti.GenreDescription})");
+                  else
+                    Console.WriteLine($"  - Genre           : {ti.Genre.Value}");
+                }
+                if (ti.Identification != null) Console.WriteLine($"  - Identification  : {ti.Identification}");
+                if (ti.ProductCode != null) Console.WriteLine($"  - UPC/EAN         : {ti.ProductCode}");
+                if (ti.Title != null) Console.WriteLine($"  - Title           : {ti.Title}");
+                if (ti.Performer != null) Console.WriteLine($"  - Performer       : {ti.Performer}");
+                if (ti.Lyricist != null) Console.WriteLine($"  - Lyricist        : {ti.Lyricist}");
+                if (ti.Composer != null) Console.WriteLine($"  - Composer        : {ti.Composer}");
+                if (ti.Arranger != null) Console.WriteLine($"  - Arranger        : {ti.Arranger}");
+                if (ti.Message != null) Console.WriteLine($"  - Message         : {ti.Message}");
+              }
+              Console.WriteLine();
+            }
+          }
+          Console.WriteLine("Tracks:");
+          { // Check for a "hidden" pre-gap track
+            var t = toc.Tracks[toc.FirstTrack];
+            if (t.StartTime > Program.TwoSeconds)
+              Console.WriteLine($" --- Offset: {150,6} ({Program.TwoSeconds,-16}) Length: {t.Offset - 150,6} ({t.StartTime.Subtract(Program.TwoSeconds),-16})");
+          }
+          foreach (var t in toc.Tracks) {
+            Console.WriteLine($" {t.Number,2}. Offset: {t.Offset,6} ({t.StartTime,-16}) Length: {t.Length,6} ({t.Duration,-16}) ISRC: {t.Isrc}");
+            if (showText && languages?.Count > 0) {
+              var text = t.TextInfo;
+              if (text?.Count > 0) {
+                Console.WriteLine("     CD-TEXT Information:");
+                var idx = 0;
+                foreach (var l in languages) {
+                  Console.WriteLine($"     - Language: {l}");
+                  var ti = text[idx++];
+                  if (ti.Title          != null) Console.WriteLine($"       - Title     : {ti.Title}");
+                  if (ti.Performer      != null) Console.WriteLine($"       - Performer : {ti.Performer}");
+                  if (ti.Lyricist       != null) Console.WriteLine($"       - Lyricist  : {ti.Lyricist}");
+                  if (ti.Composer       != null) Console.WriteLine($"       - Composer  : {ti.Composer}");
+                  if (ti.Arranger       != null) Console.WriteLine($"       - Arranger  : {ti.Arranger}");
+                  if (ti.Message        != null) Console.WriteLine($"       - Message   : {ti.Message}");
+                }
+              }
+            }
+          }
+        }
       }
       catch (Exception e) {
         Program.ReportExceptionOnConsole(e);
         return 1;
       }
-      finally {
-        if (Debugger.IsAttached)
-          Console.ReadKey();
-      }
+      return 0;
     }
 
   }
