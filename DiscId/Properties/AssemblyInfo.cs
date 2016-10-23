@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle        ("DiscId")]
-[assembly: AssemblyDescription  ("Small tool to get a disc's discid, MCN and ISRC")]
+[assembly: AssemblyDescription  ("Small tool to get a disc's discid, MCN, ISRC and/or CD-TEXT")]
 [assembly: AssemblyCompany      ("MetaBrainz")]
 [assembly: AssemblyProduct      ("libdiscid")]
 [assembly: AssemblyCopyright    ("Copyright © Tim Van Holder 2016")]
@@ -13,4 +13,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("0.1.0")]
 
 // This should match AssemblyFileVersion, plus optional extra tags (such as a pre-release indicator).
-[assembly: AssemblyInformationalVersion("0.1.0 (pre-release)")]
+[assembly: AssemblyInformationalVersion("0.1.0")]
