@@ -1,11 +1,11 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle        ("DiscId")]
-[assembly: AssemblyDescription  ("Small tool to get a disc's discid, MCN, ISRC and/or CD-TEXT")]
-[assembly: AssemblyCompany      ("MetaBrainz")]
-[assembly: AssemblyProduct      ("libdiscid")]
-[assembly: AssemblyCopyright    ("Copyright © Tim Van Holder 2016")]
+[assembly: AssemblyTitle      ("DiscId")]
+[assembly: AssemblyDescription("Small tool to get a disc's discid, MCN, ISRC and/or CD-TEXT")]
+[assembly: AssemblyCompany    ("MetaBrainz")]
+[assembly: AssemblyProduct    ("libdiscid")]
+[assembly: AssemblyCopyright  ("Copyright © Tim Van Holder 2016")]
 
 [assembly: ComVisible(false)]
 
