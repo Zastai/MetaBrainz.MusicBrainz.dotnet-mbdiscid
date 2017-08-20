@@ -1,14 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFrameworks>net35;net20</TargetFrameworks>
-  </PropertyGroup>
+<Project Sdk="Microsoft.NET.Sdk">
+
   <Import Project="..\build\Common.props" />
-  <ItemGroup>
-    <Compile Remove="Properties\*" />
-  </ItemGroup>
+  <Import Project="..\build\NuGetPackage.props" />
+
+  <PropertyGroup>
+    <TargetFrameworks>net45;net40</TargetFrameworks>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Version>0.2.0-pre</Version>
+    <AssemblyVersion>0.2</AssemblyVersion>
+    <FileVersion>0.2.0</FileVersion>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\MetaBrainz.MusicBrainz.DiscId\MetaBrainz.MusicBrainz.DiscId.csproj" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <Title>DiscID Utility</Title>
+    <Description>Small tool to get a disc's discid, MCN, ISRC and/or CD-TEXT.</Description>
+    <PackageTags>MusicBrainz discid audio cd cd-text isrc upc ean libdiscid</PackageTags>
+    <!-- Not a NuGet package of its own. -->
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
 </Project>
