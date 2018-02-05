@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Text;
 
 namespace MetaBrainz.MusicBrainz.DiscId {
 
@@ -35,24 +35,32 @@ namespace MetaBrainz.MusicBrainz.DiscId {
 
     private static int Main(string[] args) {
       try {
+        {
+          var sb = new StringBuilder();
+          var defaultDevice = TableOfContents.DefaultDevice;
+          foreach (var dev in TableOfContents.AvailableDevices) {
+            if (sb.Length > 0)
+              sb.Append(", ");
+            sb.Append(dev);
+            if (dev == defaultDevice)
+              sb.Append(" (default)");
+          }
+          Console.WriteLine($"Available Devices   : {sb}");
+        }
         var features = TableOfContents.AvailableFeatures;
+        Console.WriteLine($"Supported Features  : {features}");
+        Console.WriteLine();
         string device = null;
         foreach (var arg in args) {
           switch (arg) {
             case "help": case "-?": case "/?": {
-              Console.WriteLine($"Supported Read Features: {TableOfContents.AvailableFeatures}");
-              Console.WriteLine();
-              Console.WriteLine($"Default Device: {TableOfContents.DefaultDevice ?? "<none available>"}");
+              Console.WriteLine("Usage: DiscId [OPTIONS] [DEVICE]");
               Console.WriteLine();
               Console.WriteLine("Available Options:");
-              Console.WriteLine("  -noisrc       Disable reading of track ISRC values.");
-              Console.WriteLine("  -nomcn        Disable reading of the media catalog number.");
-              Console.WriteLine("  -notext       Disable reading of CD-TEXT info.");
-              Console.WriteLine();
-              Console.WriteLine("Available Devices:");
-              var n = 0;
-              foreach (var dev in TableOfContents.AvailableDevices)
-                Console.WriteLine($"{++n,3}. {dev}");
+              Console.WriteLine("  -noisrc     Disable reading of track ISRC values.");
+              Console.WriteLine("  -nomcn      Disable reading of the media catalog number.");
+              Console.WriteLine("  -notext     Disable reading of CD-TEXT info.");
+              Console.WriteLine("  -help, -?   Show this list of options.");
               return 0;
             }
             case "-noisrc": case "/noisrc": features &= ~DiscReadFeature.TrackIsrc;          break;
@@ -70,6 +78,7 @@ namespace MetaBrainz.MusicBrainz.DiscId {
           Console.WriteLine("No table of contents available.");
         else {
           Console.WriteLine($"CD Device Used      : {toc.DeviceName}");
+          Console.WriteLine($"Features Requested  : {features}");
           Console.WriteLine();
           if ((features & DiscReadFeature.MediaCatalogNumber) != 0)
             Console.WriteLine($"Media Catalog Number: {toc.MediaCatalogNumber ?? "* not set *"}");
