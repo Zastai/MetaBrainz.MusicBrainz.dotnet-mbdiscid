@@ -4,6 +4,7 @@
   <Import Project="..\build\NuGetPackage.props" />
 
   <PropertyGroup>
+    <RootNamespace>MetaBrainz.MusicBrainz.DiscId</RootNamespace>
     <TargetFrameworks>net45;net40</TargetFrameworks>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
