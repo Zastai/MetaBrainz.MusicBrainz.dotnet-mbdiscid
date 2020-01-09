@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Title>DiscID Utility</Title>
+    <Description>Small tool to get a disc's discid, MCN, ISRC and/or CD-TEXT.</Description>
+    <PackageTags>MusicBrainz discid audio cd cd-text isrc upc ean libdiscid</PackageTags>
+    <Version>0.2.0-pre</Version>
+    <PackAsTool>true</PackAsTool>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RootNamespace>MetaBrainz.MusicBrainz.DiscId</RootNamespace>
+    <TargetFrameworks>netcoreapp2.1;netcoreapp3.1</TargetFrameworks>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MetaBrainz.MusicBrainz.DiscId\MetaBrainz.MusicBrainz.DiscId.csproj" />
+  </ItemGroup>
+
+</Project>
