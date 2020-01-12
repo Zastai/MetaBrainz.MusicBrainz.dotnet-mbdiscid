@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Text;
 
 namespace MetaBrainz.MusicBrainz.DiscId {
@@ -10,7 +11,7 @@ namespace MetaBrainz.MusicBrainz.DiscId {
     private static void ReportExceptionOnConsole(Exception e, string prefix = "") {
       if (e == null)
         return;
-      var curcolor = Console.ForegroundColor;
+      var currentColor = Console.ForegroundColor;
       try {
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.Write(prefix);
@@ -29,10 +30,11 @@ namespace MetaBrainz.MusicBrainz.DiscId {
         Program.ReportExceptionOnConsole(e.InnerException, prefix);
       }
       finally {
-        Console.ForegroundColor = curcolor;
+        Console.ForegroundColor = currentColor;
       }
     }
 
+    [STAThread]
     private static int Main(string[] args) {
       try {
         {
@@ -51,6 +53,7 @@ namespace MetaBrainz.MusicBrainz.DiscId {
         Console.WriteLine($"Supported Features  : {features}");
         Console.WriteLine();
         string device = null;
+        var launchSubmission = false;
         foreach (var arg in args) {
           switch (arg) {
             case "help": case "-?": case "/?": {
@@ -60,9 +63,11 @@ namespace MetaBrainz.MusicBrainz.DiscId {
               Console.WriteLine("  -noisrc     Disable reading of track ISRC values.");
               Console.WriteLine("  -nomcn      Disable reading of the media catalog number.");
               Console.WriteLine("  -notext     Disable reading of CD-TEXT info.");
+              Console.WriteLine("  -launch     Launch the submission URL after showing the information.");
               Console.WriteLine("  -help, -?   Show this list of options.");
               return 0;
             }
+            case "-launch": case "/launch": launchSubmission = true;                         break;
             case "-noisrc": case "/noisrc": features &= ~DiscReadFeature.TrackIsrc;          break;
             case "-nomcn":  case "/nomcn":  features &= ~DiscReadFeature.MediaCatalogNumber; break;
             case "-notext": case "/notext": features &= ~DiscReadFeature.CdText;             break;
@@ -143,6 +148,8 @@ namespace MetaBrainz.MusicBrainz.DiscId {
               }
             }
           }
+          if (launchSubmission)
+            Process.Start(new ProcessStartInfo { FileName = toc.SubmissionUrl.ToString(), UseShellExecute = true });
         }
       }
       catch (Exception e) {
