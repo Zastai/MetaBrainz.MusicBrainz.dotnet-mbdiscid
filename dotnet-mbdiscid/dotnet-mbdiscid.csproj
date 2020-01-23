@@ -5,7 +5,7 @@
     <Title>DiscID Utility</Title>
     <Description>Small tool to get a disc's discid, MCN, ISRC and/or CD-TEXT.</Description>
     <PackageTags>MusicBrainz discid audio cd cd-text isrc upc ean libdiscid</PackageTags>
-    <Version>0.2.0-pre</Version>
+    <Version>1.0.0-pre</Version>
     <PackAsTool>true</PackAsTool>
   </PropertyGroup>
 
