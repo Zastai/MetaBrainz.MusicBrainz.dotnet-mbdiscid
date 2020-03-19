@@ -12,8 +12,12 @@
 
   <PropertyGroup>
     <RootNamespace>MetaBrainz.MusicBrainz.DiscId</RootNamespace>
-    <TargetFrameworks>netcoreapp2.1;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;netcoreapp2.1</TargetFrameworks>
     <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
