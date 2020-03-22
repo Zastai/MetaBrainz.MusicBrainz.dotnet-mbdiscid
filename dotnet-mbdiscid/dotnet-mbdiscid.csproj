@@ -21,7 +21,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MetaBrainz.MusicBrainz.DiscId\MetaBrainz.MusicBrainz.DiscId.csproj" />
+    <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" IncludeAssets="compile" PrivateAssets="all" />
+    <PackageReference Include="MetaBrainz.MusicBrainz.DiscId" Version="2.0.0" />
   </ItemGroup>
 
 </Project>
