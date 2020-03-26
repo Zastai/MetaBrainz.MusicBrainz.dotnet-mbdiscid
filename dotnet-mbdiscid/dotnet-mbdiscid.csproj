@@ -16,10 +16,6 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" IncludeAssets="compile" PrivateAssets="all" />
     <PackageReference Include="MetaBrainz.MusicBrainz.DiscId" Version="2.0.0" />
