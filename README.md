@@ -10,6 +10,10 @@ Once done, you can use `dotnet mbdiscid` to run it.
 
 ## Release Notes
 
+### v1.0.1 (2020-04-17)
+
+Fixed a build issue causing the XML documentation to be missing from the NuGet package.
+
 ### v1.0 (2020-03-22)
 
 First release.
