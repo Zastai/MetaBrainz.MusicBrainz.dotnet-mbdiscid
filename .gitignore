@@ -2,9 +2,8 @@
 /.vs/
 /.vscode/
 /output/
-/Directory.Build.Local.props
-/Directory.Build.Local.targets
-/msbuild.binlog
+msbuild.binlog
+msbuild.*.binlog
 *.*proj.user
 *.DotSettings.user
 *.userprefs

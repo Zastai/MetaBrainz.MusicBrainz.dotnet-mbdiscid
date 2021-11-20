@@ -1,23 +1,36 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.13
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnet-mbdiscid", "dotnet-mbdiscid\dotnet-mbdiscid.csproj", "{401FF06E-8724-4976-9946-DE3424A1C845}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Support Files", "Support Files", "{F997B31A-CF25-4C63-BEB5-172F7E13D9B3}"
 	ProjectSection(SolutionItems) = preProject
-		build\Common.props = build\Common.props
-		build\Common.targets = build\Common.targets
-		Directory.Build.props = Directory.Build.props
-		Directory.Build.targets = Directory.Build.targets
-		build\PackageIcon.targets = build\PackageIcon.targets
-		README.md = README.md
-		build\TargetFrameworkVersionDefineConstants.targets = build\TargetFrameworkVersionDefineConstants.targets
-		build\Versioning.targets = build\Versioning.targets
 		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
 		appveyor.yml = appveyor.yml
+		build-package.ps1 = build-package.ps1
+		Directory.Packages.props = Directory.Packages.props
+		global.json = global.json
+		LICENSE.md = LICENSE.md
+		package-icon.png = package-icon.png
+		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{D9810165-F68B-45A7-BF18-202991370B56}"
+	ProjectSection(SolutionItems) = preProject
+		.github\dependabot.yml = .github\dependabot.yml
+		.github\github-labels.yml = .github\github-labels.yml
+		.github\release-drafter.yml = .github\release-drafter.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Actions", "Actions", "{CB7678DB-56A0-4A3B-83DB-1CB6D8979BB2}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\release-drafter.yml = .github\workflows\release-drafter.yml
+		.github\workflows\update-labels.yml = .github\workflows\update-labels.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "dotnet-mbdiscid", "dotnet-mbdiscid\dotnet-mbdiscid.csproj", "{401FF06E-8724-4976-9946-DE3424A1C845}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,5 +47,10 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{D9810165-F68B-45A7-BF18-202991370B56} = {F997B31A-CF25-4C63-BEB5-172F7E13D9B3}
+		{CB7678DB-56A0-4A3B-83DB-1CB6D8979BB2} = {D9810165-F68B-45A7-BF18-202991370B56}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8BD2C1C6-5678-41B3-A295-AFFF96957C18}
 	EndGlobalSection
 EndGlobal
