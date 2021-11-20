@@ -1,24 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="MetaBrainz.Build.Sdk">
 
   <PropertyGroup>
     <Title>DiscID Utility</Title>
     <Description>Small tool to get a disc's discid, MCN, ISRC and/or CD-TEXT.</Description>
-    <PackageTags>MusicBrainz discid audio cd cd-text isrc upc ean libdiscid</PackageTags>
-    <Version>1.0.2-pre</Version>
-    <PackAsTool>true</PackAsTool>
+    <PackageCopyrightYears>2016-2021</PackageCopyrightYears>
     <PackageId>MetaBrainz.MusicBrainz.$(AssemblyName)</PackageId>
+    <PackageTags>MusicBrainz discid audio cd cd-text isrc upc ean libdiscid</PackageTags>
+    <Version>2.0.0-pre</Version>
   </PropertyGroup>
 
   <PropertyGroup>
     <RootNamespace>MetaBrainz.MusicBrainz.DiscId</RootNamespace>
-    <TargetFrameworks>netcoreapp3.1;netcoreapp2.1</TargetFrameworks>
+    <TargetFrameworks>net6.0;netcoreapp3.1</TargetFrameworks>
     <OutputType>Exe</OutputType>
+    <PackAsTool>true</PackAsTool>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" IncludeAssets="compile" PrivateAssets="all" />
-    <PackageReference Include="MetaBrainz.MusicBrainz.DiscId" Version="2.0.0" />
+    <PackageReference Include="JetBrains.Annotations" IncludeAssets="compile" PrivateAssets="all" />
+    <PackageReference Include="MetaBrainz.MusicBrainz.DiscId" />
   </ItemGroup>
 
 </Project>

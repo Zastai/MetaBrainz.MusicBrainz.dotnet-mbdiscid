@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+
+  <!-- Package Versions -->
+  <ItemGroup>
+    <PackageVersion Include="JetBrains.Annotations" Version="2021.3.0" />
+    <PackageVersion Include="MetaBrainz.MusicBrainz.DiscId" Version="3.0.0" />
+  </ItemGroup>
+
+</Project>
