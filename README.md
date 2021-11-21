@@ -1,4 +1,4 @@
-# MetaBrainz.MusicBrainz.dotnet-mbdiscid [![Build Status][CI-S]]][CI-L] [![NuGet Version][NuGet-S]][NuGet-L]
+# MetaBrainz.MusicBrainz.dotnet-mbdiscid [![Build Status][CI-S]][CI-L] [![NuGet Version][NuGet-S]][NuGet-L]
 
 A small program using `MetaBrainz.MusicBrainz.DiscId` to show
 information about an audio CD, including the MusicBrainz disc ID,
