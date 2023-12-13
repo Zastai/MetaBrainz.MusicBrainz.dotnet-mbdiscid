@@ -1,17 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.0.31912.275
+VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Support Files", "Support Files", "{F997B31A-CF25-4C63-BEB5-172F7E13D9B3}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
-		appveyor.yml = appveyor.yml
 		build-package.ps1 = build-package.ps1
 		Directory.Packages.props = Directory.Packages.props
-		global.json = global.json
 		LICENSE.md = LICENSE.md
 		package-icon.png = package-icon.png
 		README.md = README.md
@@ -26,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{D98101
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Actions", "Actions", "{CB7678DB-56A0-4A3B-83DB-1CB6D8979BB2}"
 	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yml = .github\workflows\build.yml
 		.github\workflows\release-drafter.yml = .github\workflows\release-drafter.yml
 		.github\workflows\update-labels.yml = .github\workflows\update-labels.yml
 	EndProjectSection
