@@ -3,7 +3,7 @@
 
   <!-- Package Versions -->
   <ItemGroup>
-    <PackageVersion Include="JetBrains.Annotations" Version="2021.3.0" />
+    <PackageVersion Include="JetBrains.Annotations" Version="2023.3.0" />
     <PackageVersion Include="MetaBrainz.MusicBrainz.DiscId" Version="3.0.0" />
   </ItemGroup>
 
