@@ -12,8 +12,9 @@ dotnet tool install -g MetaBrainz.MusicBrainz.dotnet-mbdiscid
 
 Once done, you can use `dotnet mbdiscid` to run it.
 
-[CI-S]: https://img.shields.io/appveyor/build/zastai/metabrainz-musicbrainz-dotnet-mbdiscid
-[CI-L]: https://ci.appveyor.com/project/Zastai/metabrainz-musicbrainz-dotnet-mbdiscid
+[CI-S]: https://github.com/Zastai/MetaBrainz.MusicBrainz.dotnet-mbdiscid/actions/workflows/build.yml/badge.svg
+[CI-L]: https://github.com/Zastai/MetaBrainz.MusicBrainz.dotnet-mbdiscid/actions/workflows/build.yml
 
 [NuGet-S]: https://img.shields.io/nuget/v/MetaBrainz.MusicBrainz.dotnet-mbdiscid
-[NuGet-L]: https://www.nuget.org/packages/MetaBrainz.MusicBrainz.dotnet-mbdiscid
+[NuGet-L]: https://nuget.org/packages/MetaBrainz.MusicBrainz.dotnet-mbdiscid
+
