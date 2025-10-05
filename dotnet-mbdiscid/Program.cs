@@ -11,40 +11,28 @@ internal static class Program {
   [STAThread]
   private static int Main(string[] args) {
     try {
-      {
-        var sb = new StringBuilder();
-        var defaultDevice = TableOfContents.DefaultDevice;
-        foreach (var dev in TableOfContents.AvailableDevices) {
-          if (sb.Length > 0) {
-            sb.Append(", ");
-          }
-          sb.Append(dev);
-          if (dev == defaultDevice) {
-            sb.Append(" (default)");
-          }
-        }
-        Console.WriteLine($"Available Devices   : {sb}");
-      }
-      var features = TableOfContents.AvailableFeatures;
-      Console.WriteLine($"Supported Features  : {features}");
-      Console.WriteLine();
       string? device = null;
+      var features = TableOfContents.AvailableFeatures;
       var launchSubmission = false;
       foreach (var arg in args) {
         switch (arg) {
-          case "help":
-          case "-?":
-          case "/?": {
-            Console.WriteLine("Usage: DiscId [OPTIONS] [DEVICE]");
+          case "-help" or "/help" or "/?" or "-?": {
+            Console.WriteLine("Usage: dotnet-mbdiscid [OPTIONS] [DEVICE]");
             Console.WriteLine();
             Console.WriteLine("Available Options:");
+            Console.WriteLine("  -info       Do not try to read any table of contents, show basic info only.");
+            Console.WriteLine("  -launch     Launch the submission URL after showing the information.");
             Console.WriteLine("  -noisrc     Disable reading of track ISRC values.");
             Console.WriteLine("  -nomcn      Disable reading of the media catalog number.");
             Console.WriteLine("  -notext     Disable reading of CD-TEXT info.");
-            Console.WriteLine("  -launch     Launch the submission URL after showing the information.");
+            Console.WriteLine("  -version    Show version information.");
             Console.WriteLine("  -help, -?   Show this list of options.");
             return 0;
           }
+          case "-info":
+          case "/info":
+            features = DiscReadFeature.None;
+            break;
           case "-launch":
           case "/launch":
             launchSubmission = true;
@@ -61,6 +49,13 @@ internal static class Program {
           case "/notext":
             features &= ~DiscReadFeature.CdText;
             break;
+          case "-version" or "/version": {
+            var toolVersion = typeof(Program).Assembly.GetName().Version?.ToString(3) ?? "?.?.?";
+            var libraryName = typeof(TableOfContents).Assembly.GetName();
+            var libVersion = libraryName.Version?.ToString(3) ?? "?.?.?";
+            Console.WriteLine($"dotnet-mbdiscid {toolVersion}, using {libraryName.Name} {libVersion}.");
+            return 0;
+          }
           default:
             if (device != null) {
               throw new ArgumentException("Too many command line arguments given.");
@@ -69,11 +64,27 @@ internal static class Program {
             break;
         }
       }
+      {
+        var sb = new StringBuilder();
+        foreach (var dev in TableOfContents.AvailableDevices) {
+          if (sb.Length > 0) {
+            sb.Append(", ");
+          }
+          sb.Append(dev);
+        }
+        Console.WriteLine($"Available Devices   : {sb}");
+      }
+      Console.WriteLine($"Default Device      : {TableOfContents.DefaultDevice}");
+      Console.WriteLine($"Supported Features  : {TableOfContents.AvailableFeatures}");
+      if (features == DiscReadFeature.None) {
+        return 0;
+      }
+      Console.WriteLine();
       var toc = TableOfContents.ReadDisc(device, features);
       Console.WriteLine($"CD Device Used      : {toc.DeviceName}");
       Console.WriteLine($"Features Requested  : {features}");
       Console.WriteLine();
-      if ((features & DiscReadFeature.MediaCatalogNumber) != 0) {
+      if (features.HasFlag(DiscReadFeature.MediaCatalogNumber)) {
         Console.WriteLine($"Media Catalog Number: {toc.MediaCatalogNumber ?? "* not set *"}");
       }
       Console.WriteLine($"MusicBrainz Disc ID : {toc.DiscId}");
@@ -136,7 +147,7 @@ internal static class Program {
       }
       foreach (var t in toc.Tracks) {
         Console.Write($" {t.Number,2}. Offset: {t.Offset,6} ({t.StartTime,-16}) Length: {t.Length,6} ({t.Duration,-16})");
-        if ((features & DiscReadFeature.TrackIsrc) != 0) {
+        if (features.HasFlag(DiscReadFeature.TrackIsrc)) {
           Console.Write($" ISRC: {t.Isrc ?? "* not set *"}");
         }
         Console.WriteLine();
