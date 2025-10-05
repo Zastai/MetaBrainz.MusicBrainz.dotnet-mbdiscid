@@ -11,7 +11,7 @@
     <PackageCopyrightYears>2016-2025</PackageCopyrightYears>
     <PackageId>MetaBrainz.MusicBrainz.$(AssemblyName)</PackageId>
     <PackageTags>MusicBrainz discid audio cd cd-text isrc upc ean libdiscid</PackageTags>
-    <Version>3.0.1-pre</Version>
+    <Version>4.0.0-pre</Version>
   </PropertyGroup>
 
   <PropertyGroup>
