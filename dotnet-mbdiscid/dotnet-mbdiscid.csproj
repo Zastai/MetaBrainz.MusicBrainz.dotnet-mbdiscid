@@ -5,13 +5,13 @@
 
   <PropertyGroup>
     <Authors>Zastai</Authors>
-    <Title>DiscID Utility</Title>
+    <Title>MusicBrain DiscID Tool</Title>
     <Description>Small tool to get a disc's discid, MCN, ISRC and/or CD-TEXT.</Description>
     <PackageCopyrightOwners>Tim Van Holder</PackageCopyrightOwners>
     <PackageCopyrightYears>2016-2025</PackageCopyrightYears>
     <PackageId>MetaBrainz.MusicBrainz.$(AssemblyName)</PackageId>
     <PackageTags>MusicBrainz discid audio cd cd-text isrc upc ean libdiscid</PackageTags>
-    <Version>4.0.1-pre</Version>
+    <Version>4.1.0-pre</Version>
   </PropertyGroup>
 
   <PropertyGroup>
