@@ -25,6 +25,7 @@ internal static class Program {
             Console.WriteLine("  -noisrc     Disable reading of track ISRC values.");
             Console.WriteLine("  -nomcn      Disable reading of the media catalog number.");
             Console.WriteLine("  -notext     Disable reading of CD-TEXT info.");
+            Console.WriteLine("  -trace      Enable trace output.");
             Console.WriteLine("  -version    Show version information.");
             Console.WriteLine("  -help, -?   Show this list of options.");
             return 0;
@@ -49,6 +50,16 @@ internal static class Program {
           case "/notext":
             features &= ~DiscReadFeature.CdText;
             break;
+          case "-trace":
+          case "/trace": {
+            var listener = new ConsoleTraceListener(true) {
+              TraceOutputOptions = TraceOptions.None,
+            };
+            TableOfContents.TraceSource.Listeners.Clear();
+            TableOfContents.TraceSource.Listeners.Add(listener);
+            TableOfContents.TraceSource.Switch.Level = SourceLevels.All;
+            break;
+          }
           case "-version" or "/version": {
             var toolVersion = typeof(Program).Assembly.GetName().Version?.ToString(3) ?? "?.?.?";
             var libraryName = typeof(TableOfContents).Assembly.GetName();
