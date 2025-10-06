@@ -68,7 +68,7 @@ internal static class Program {
             return 0;
           }
           default:
-            if (device != null) {
+            if (device is not null) {
               throw new ArgumentException("Too many command line arguments given.");
             }
             device = arg;
@@ -111,37 +111,38 @@ internal static class Program {
           foreach (var l in languages) {
             Console.WriteLine($"- Language: {l}");
             var ti = text[idx++];
-            if (ti.Genre.HasValue) {
-              if (ti.GenreDescription != null) {
-                Console.WriteLine($"  - Genre           : {ti.Genre.Value} ({ti.GenreDescription})");
-              }
-              else {
-                Console.WriteLine($"  - Genre           : {ti.Genre.Value}");
-              }
+            if (ti.Genre is not null) {
+              Console.WriteLine($"  - Genre Code      : {ti.Genre.Value}");
             }
-            if (ti.Identification != null) {
+            if (ti.GenreDescription is not null) {
+              Console.WriteLine($"  - Genre Text      : {ti.GenreDescription}");
+            }
+            if (ti.Identification is not null) {
               Console.WriteLine($"  - Identification  : {ti.Identification}");
             }
-            if (ti.ProductCode != null) {
+            if (ti.ProductCode is not null) {
               Console.WriteLine($"  - UPC/EAN         : {ti.ProductCode}");
             }
-            if (ti.Title != null) {
+            if (ti.Title is not null) {
               Console.WriteLine($"  - Title           : {ti.Title}");
             }
-            if (ti.Performer != null) {
+            if (ti.Performer is not null) {
               Console.WriteLine($"  - Performer       : {ti.Performer}");
             }
-            if (ti.Lyricist != null) {
+            if (ti.Lyricist is not null) {
               Console.WriteLine($"  - Lyricist        : {ti.Lyricist}");
             }
-            if (ti.Composer != null) {
+            if (ti.Composer is not null) {
               Console.WriteLine($"  - Composer        : {ti.Composer}");
             }
-            if (ti.Arranger != null) {
+            if (ti.Arranger is not null) {
               Console.WriteLine($"  - Arranger        : {ti.Arranger}");
             }
-            if (ti.Message != null) {
+            if (ti.Message is not null) {
               Console.WriteLine($"  - Message         : {ti.Message}");
+            }
+            if (ti.ClosedInformation is not null) {
+              Console.WriteLine($"  - Closed Info     : {ti.ClosedInformation}");
             }
           }
           Console.WriteLine();
@@ -170,25 +171,25 @@ internal static class Program {
             foreach (var l in languages) {
               Console.WriteLine($"     - Language: {l}");
               var ti = text[idx++];
-              if (ti.Title != null) {
+              if (ti.Title is not null) {
                 Console.WriteLine($"       - Title     : {ti.Title}");
               }
-              if (ti.Performer != null) {
+              if (ti.Performer is not null) {
                 Console.WriteLine($"       - Performer : {ti.Performer}");
               }
-              if (ti.Lyricist != null) {
+              if (ti.Lyricist is not null) {
                 Console.WriteLine($"       - Lyricist  : {ti.Lyricist}");
               }
-              if (ti.Composer != null) {
+              if (ti.Composer is not null) {
                 Console.WriteLine($"       - Composer  : {ti.Composer}");
               }
-              if (ti.Arranger != null) {
+              if (ti.Arranger is not null) {
                 Console.WriteLine($"       - Arranger  : {ti.Arranger}");
               }
-              if (ti.Message != null) {
+              if (ti.Message is not null) {
                 Console.WriteLine($"       - Message   : {ti.Message}");
               }
-              if (ti.Isrc != null) {
+              if (ti.Isrc is not null) {
                 Console.WriteLine($"       - ISRC      : {ti.Isrc}");
               }
             }
@@ -210,7 +211,7 @@ internal static class Program {
   }
 
   private static void ReportExceptionOnConsole(Exception? e, string prefix = "") {
-    if (e == null) {
+    if (e is null) {
       return;
     }
     var currentColor = Console.ForegroundColor;
